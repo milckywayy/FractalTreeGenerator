@@ -9,10 +9,13 @@ class Checkbox(InterfaceElement):
         self.checkbox = QCheckBox(text)
         self.checkbox.setChecked(default_value)
 
+        if on_change_fun is not None:
+            self.checkbox.stateChanged.connect(on_change_fun)
+
         self.layout.addWidget(self.checkbox)
 
     def get_layout(self):
         return self.layout
 
     def get_value(self):
-        return self.checkbox.value()
+        return self.checkbox.isChecked()

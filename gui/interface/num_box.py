@@ -12,6 +12,9 @@ class NumBox(InterfaceElement):
         self.input.setMaximum(max_value)
         self.input.setValue(default_value)
 
+        if on_change_fun is not None:
+            self.input.valueChanged.connect(on_change_fun)
+
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.input)
 

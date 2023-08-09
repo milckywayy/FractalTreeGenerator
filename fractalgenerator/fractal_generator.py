@@ -2,21 +2,23 @@ import cv2
 import numpy as np
 import math
 
-from utils import get_color_faded
-
 DEFAULT_WINDOW_WIDTH = 1920
 DEFAULT_WINDOW_HEIGHT = 1080
 DEFAULT_TREE_COLOR = (20, 20, 20)
 DEFAULT_TREE_FADE_COLOR = (15, 25, 35)
 DEFAULT_BACKGROUND_COLOR = (255, 255, 255)
 
-DEFAULT_ITERATIONS = 10
+DEFAULT_ITERATIONS = 6
 DEFAULT_ANGLE_DIFF = 40
 DEFAULT_BRANCHES = 3
 DEFAULT_BRANCH_SHORTEN = 0.75
 DEFAULT_START_BRANCH_LENGTH = 150
 DEFAULT_ROOT_HEIGHT = 200
 DEFAULT_COLOR_FADE = True
+
+
+def get_color_faded(color, fade, value):
+    return [color[0] + (fade[0] * value), color[1] + (fade[1] * value), color[2] + (fade[2] * value)]
 
 
 class FractalGenerator:
@@ -40,7 +42,7 @@ class FractalGenerator:
 
     def generate_tree(self):
         # Draw background
-        self.image[np.all(self.image <= 100, axis=-1)] = self.background_color
+        self.image[np.all(self.image <= 255, axis=-1)] = self.background_color
 
         # Point where the recursion starts
         root_top = (int(self.width / 2), int(self.height - self.root_height))
@@ -54,8 +56,8 @@ class FractalGenerator:
     def show_image(self):
         cv2.imshow(self.window_name, cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB))
 
-    def get_image(self):
-        return cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+    def get_BGR_image(self):
+        return self.image
 
     def write_to_file(self, file_path):
         cv2.imwrite(file_path, cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB))

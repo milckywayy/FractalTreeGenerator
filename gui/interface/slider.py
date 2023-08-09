@@ -9,6 +9,7 @@ class Slider(InterfaceElement):
         self.layout = QHBoxLayout()
         self.label = QLabel(text)
         self.precision = precision
+        self.on_change_fun = on_change_fun
         self.slider = QSlider()
         self.slider.setOrientation(Qt.Horizontal)
         self.slider.setMinimum(min_value)
@@ -16,7 +17,7 @@ class Slider(InterfaceElement):
         self.slider.setValue(int(default_value * self.precision))
         self.slider.valueChanged.connect(self.update_value)
         self.slider_value = QLabel("0")
-        self.update_value()
+        self.slider_value.setText(str(default_value))
 
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.slider)
@@ -30,3 +31,6 @@ class Slider(InterfaceElement):
 
     def update_value(self):
         self.slider_value.setText(str(self.get_value()))
+
+        if self.on_change_fun is not None:
+            self.on_change_fun()

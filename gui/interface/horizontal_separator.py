@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QHBoxLayout, QFrame
 from gui.interface.interface_element import InterfaceElement
 
 
-class Separator(InterfaceElement):
+class HorizontalSeparator(InterfaceElement):
     def __init__(self):
         self.layout = QHBoxLayout()
         self.separator = QFrame()

@@ -20,6 +20,8 @@ class ColorBox(InterfaceElement):
 
         self.color_dialog = QColorDialog()
 
+        self.on_change_fun = on_change_fun
+
     def get_layout(self):
         return self.layout
 
@@ -34,3 +36,6 @@ class ColorBox(InterfaceElement):
         if col.isValid():
             self.selected_color = (col.red(), col.green(), col.blue())
             self.set_button_color(self.selected_color)
+
+            if self.on_change_fun is not None:
+                self.on_change_fun()
