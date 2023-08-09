@@ -6,19 +6,17 @@ from gui.interface.slider import Slider
 from gui.interface.num_box import NumBox
 from gui.interface.color_box import ColorBox
 from gui.interface.checkbox import Checkbox
+from gui.interface.button import Button
 from gui.interface.horizontal_separator import HorizontalSeparator
 from fractalgenerator.fractal_generator import *
 from gui.interface.vertical_separator import VerticalSeparator
-
-
-# TODO Add preview scale slider
-# TODO Add export image button
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.pixmap = None
         self.fractal_gen = FractalGenerator("Fractal Tree")
         self.fractal_gen.generate_tree()
 
@@ -36,6 +34,9 @@ class MainWindow(QMainWindow):
 
         self.height_box = NumBox("Image height:", 50, 9999, DEFAULT_WINDOW_HEIGHT, on_change_fun=self.update_generator_values)
         options_layout.addLayout(self.height_box.get_layout())
+
+        self.preview_zoom_slider = Slider("Preview zoom:", 1, 200, 100, on_change_fun=self.update_preview_zoom)
+        options_layout.addLayout(self.preview_zoom_slider.get_layout())
 
         options_layout.addLayout(HorizontalSeparator().get_layout())
 
@@ -75,6 +76,11 @@ class MainWindow(QMainWindow):
         self.fade_checkbox = Checkbox("Branch color fade", DEFAULT_COLOR_FADE, on_change_fun=self.update_generator_values)
         options_layout.addLayout(self.fade_checkbox.get_layout())
 
+        options_layout.addLayout(HorizontalSeparator().get_layout())
+
+        self.export_button = Button("Export image")
+        options_layout.addItem(self.export_button.get_layout())
+
         image_layout.addLayout(VerticalSeparator().get_layout())
 
         self.image_label = QLabel()
@@ -83,8 +89,7 @@ class MainWindow(QMainWindow):
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(self.image_label)
         image_layout.addWidget(scroll_area)
-        self.pixmap = self.load_image()
-        self.update_image()
+        self.load_image()
 
         layout = QHBoxLayout()
 
@@ -116,21 +121,21 @@ class MainWindow(QMainWindow):
         self.fractal_gen.start_branch_length = self.branch_length_box.get_value()
         self.fractal_gen.root_height = self.root_height_box.get_value()
         self.fractal_gen.color_fade = self.fade_checkbox.get_value()
+        self.fractal_gen.update_resolution()
 
         self.fractal_gen.generate_tree()
-        self.pixmap = self.load_image()
-        self.update_image()
+        self.load_image()
 
     def load_image(self):
         image = self.fractal_gen.get_BGR_image()
         height, width, channel = image.shape
         bytes_per_line = 3 * width
         q_image = QImage(image.data, width, height, bytes_per_line, QImage.Format_RGB888)
-        return QPixmap.fromImage(q_image)
-
-    def update_image(self):
-        # self.pixmap = self.pixmap.scaled(int(self.pixmap.width() * 0.9), int(self.pixmap.height() * 0.9))
+        self.pixmap = QPixmap.fromImage(q_image)
         self.image_label.setPixmap(self.pixmap)
+        self.update_preview_zoom()
 
-    def resizeEvent(self, event):
-        self.update_image()
+    def update_preview_zoom(self):
+        scale = self.preview_zoom_slider.get_value() / 100
+        pixmap = self.pixmap.scaled(int(self.pixmap.width() * scale), int(self.pixmap.height() * scale))
+        self.image_label.setPixmap(pixmap)

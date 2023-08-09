@@ -53,6 +53,9 @@ class FractalGenerator:
         cv2.line(self.image, root_bottom, root_top, self.tree_color, self.iterations, cv2.LINE_AA)
         self.recursive_draw(self.iterations, root_top, self.start_branch_length, 90)
 
+    def update_resolution(self):
+        self.image = np.zeros((self.height, self.width, 3), dtype=np.uint8)
+
     def show_image(self):
         cv2.imshow(self.window_name, cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB))
 
@@ -82,3 +85,9 @@ class FractalGenerator:
 
             # Go deeper
             self.recursive_draw(iterations - 1, (x, y), length * self.branch_shorten, phi)
+
+
+if __name__ == '__main__':
+    gen = FractalGenerator("w")
+    gen.generate_tree()
+    gen.write_to_file('test.png')

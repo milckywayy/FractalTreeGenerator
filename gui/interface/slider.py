@@ -12,8 +12,10 @@ class Slider(InterfaceElement):
         self.on_change_fun = on_change_fun
         self.slider = QSlider()
         self.slider.setOrientation(Qt.Horizontal)
-        self.slider.setMinimum(min_value)
-        self.slider.setMaximum(max_value)
+        self.min_value = min_value
+        self.max_value = max_value
+        self.slider.setMinimum(self.min_value)
+        self.slider.setMaximum(self.max_value)
         self.slider.setValue(int(default_value * self.precision))
         self.slider.valueChanged.connect(self.update_value)
         self.slider_value = QLabel("0")
@@ -22,6 +24,12 @@ class Slider(InterfaceElement):
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.slider)
         self.layout.addWidget(self.slider_value)
+
+    def get_max_value(self):
+        return self.max_value
+
+    def get_min_value(self):
+        return self.min_value
 
     def get_layout(self):
         return self.layout
