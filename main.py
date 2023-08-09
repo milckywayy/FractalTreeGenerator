@@ -1,18 +1,11 @@
-import cv2
+import sys
+from PyQt5.QtWidgets import QApplication
 
-from fractal_generator import FractalGenerator
-
-
-IMAGE_WINDOW_NAME = 'Fractal Tree Generator'
+from gui.window import MainWindow
 
 
 if __name__ == '__main__':
-    gen = FractalGenerator(IMAGE_WINDOW_NAME)
-
-    gen.generate_tree()
-
-    # gen.show_image()
-    gen.write_to_file('test.png')
-
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())

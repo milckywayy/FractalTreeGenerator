@@ -4,9 +4,10 @@ from gui.interface.interface_element import InterfaceElement
 
 
 class Checkbox(InterfaceElement):
-    def __init__(self, text, on_change_fun=None):
+    def __init__(self, text, default_value, on_change_fun=None):
         self.layout = QHBoxLayout()
         self.checkbox = QCheckBox(text)
+        self.checkbox.setChecked(default_value)
 
         self.layout.addWidget(self.checkbox)
 

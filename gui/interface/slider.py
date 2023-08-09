@@ -5,16 +5,18 @@ from gui.interface.interface_element import InterfaceElement
 
 
 class Slider(InterfaceElement):
-    def __init__(self, text, min_value, max_value, on_change_fun=None, precision=1.0):
+    def __init__(self, text, min_value, max_value, default_value, precision=1.0, on_change_fun=None):
         self.layout = QHBoxLayout()
         self.label = QLabel(text)
+        self.precision = precision
         self.slider = QSlider()
         self.slider.setOrientation(Qt.Horizontal)
         self.slider.setMinimum(min_value)
         self.slider.setMaximum(max_value)
+        self.slider.setValue(int(default_value * self.precision))
         self.slider.valueChanged.connect(self.update_value)
         self.slider_value = QLabel("0")
-        self.precision = precision
+        self.update_value()
 
         self.layout.addWidget(self.label)
         self.layout.addWidget(self.slider)

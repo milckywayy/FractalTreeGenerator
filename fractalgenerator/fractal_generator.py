@@ -4,24 +4,39 @@ import math
 
 from utils import get_color_faded
 
+DEFAULT_WINDOW_WIDTH = 1920
+DEFAULT_WINDOW_HEIGHT = 1080
+DEFAULT_TREE_COLOR = (20, 20, 20)
+DEFAULT_TREE_FADE_COLOR = (15, 25, 35)
+DEFAULT_BACKGROUND_COLOR = (255, 255, 255)
+
+DEFAULT_ITERATIONS = 10
+DEFAULT_ANGLE_DIFF = 40
+DEFAULT_BRANCHES = 3
+DEFAULT_BRANCH_SHORTEN = 0.75
+DEFAULT_START_BRANCH_LENGTH = 150
+DEFAULT_ROOT_HEIGHT = 200
+DEFAULT_COLOR_FADE = True
+
 
 class FractalGenerator:
     def __init__(self, window_name):
         self.window_name = window_name
-        self.width, self.height = 1920, 1080
+
+        self.width, self.height = DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT
         self.image = np.zeros((self.height, self.width, 3), dtype=np.uint8)
 
-        self.tree_color = (20, 20, 20)
-        self.tree_fade_color = (15, 25, 35)
-        self.background_color = (255, 255, 255)
+        self.tree_color = DEFAULT_TREE_COLOR
+        self.tree_fade_color = DEFAULT_TREE_FADE_COLOR
+        self.background_color = DEFAULT_BACKGROUND_COLOR
 
-        self.iterations = 10
-        self.angle_diff = 40
-        self.branches = 3
-        self.branch_shorten = 0.75
-        self.start_branch_length = 150
-        self.root_height = 200
-        self.color_fade = True
+        self.iterations = DEFAULT_ITERATIONS
+        self.angle_diff = DEFAULT_ANGLE_DIFF
+        self.branches = DEFAULT_BRANCHES
+        self.branch_shorten = DEFAULT_BRANCH_SHORTEN
+        self.start_branch_length = DEFAULT_START_BRANCH_LENGTH
+        self.root_height = DEFAULT_ROOT_HEIGHT
+        self.color_fade = DEFAULT_COLOR_FADE
 
     def generate_tree(self):
         # Draw background
@@ -38,6 +53,9 @@ class FractalGenerator:
 
     def show_image(self):
         cv2.imshow(self.window_name, cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB))
+
+    def get_image(self):
+        return cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
 
     def write_to_file(self, file_path):
         cv2.imwrite(file_path, cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB))
