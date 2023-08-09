@@ -18,9 +18,10 @@ class FractalGenerator:
         self.iterations = 10
         self.angle_diff = 40
         self.branches = 3
-        self.tree_thickness = 2
+        self.branch_shorten = 0.75
         self.start_branch_length = 150
         self.root_height = 200
+        self.color_fade = True
 
     def generate_tree(self):
         # Draw background
@@ -35,7 +36,7 @@ class FractalGenerator:
         cv2.line(self.image, root_bottom, root_top, self.tree_color, self.iterations, cv2.LINE_AA)
         self.recursive_draw(self.iterations, root_top, self.start_branch_length, 90)
 
-        # Show image
+    def show_image(self):
         cv2.imshow(self.window_name, cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB))
 
     def write_to_file(self, file_path):
@@ -45,7 +46,10 @@ class FractalGenerator:
         if iterations < 1:
             return
 
-        branch_color = get_color_faded(self.tree_color, self.tree_fade_color, self.iterations - iterations)
+        if self.color_fade:
+            branch_color = get_color_faded(self.tree_color, self.tree_fade_color, self.iterations - iterations)
+        else:
+            branch_color = self.tree_color
 
         for i in range(self.branches):
             # Find next point
@@ -57,4 +61,4 @@ class FractalGenerator:
             cv2.line(self.image, pos, (x, y), branch_color, iterations, cv2.LINE_AA)
 
             # Go deeper
-            self.recursive_draw(iterations - 1, (x, y), length * 0.75, phi)
+            self.recursive_draw(iterations - 1, (x, y), length * self.branch_shorten, phi)
