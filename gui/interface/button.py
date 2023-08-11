@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QHBoxLayout, QCheckBox, QPushButton
+from PyQt5.QtWidgets import QHBoxLayout, QPushButton
 
 from gui.interface.interface_element import InterfaceElement
 
