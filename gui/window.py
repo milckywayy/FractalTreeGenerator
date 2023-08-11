@@ -1,7 +1,6 @@
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QLabel, QScrollArea, QSplitter, QFileDialog, \
-    QMessageBox
+from PyQt5.QtGui import QPixmap, QImage, QIcon
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QLabel, QScrollArea, QSplitter, QFileDialog
 
 from gui.interface.slider import Slider
 from gui.interface.num_box import NumBox
@@ -23,6 +22,7 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Fractal Tree Generator")
         self.setGeometry(100, 100, 1200, 720)
+        self.setWindowIcon(QIcon("icon.png"))
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
