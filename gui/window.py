@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QLabel, QScrollArea, QSplitter
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QLabel, QScrollArea, QSplitter, QFileDialog
 
 from gui.interface.slider import Slider
 from gui.interface.num_box import NumBox
@@ -78,7 +78,7 @@ class MainWindow(QMainWindow):
 
         options_layout.addLayout(HorizontalSeparator().get_layout())
 
-        self.export_button = Button("Export image")
+        self.export_button = Button("Export image", on_change_fun=self.export_image())
         options_layout.addItem(self.export_button.get_layout())
 
         image_layout.addLayout(VerticalSeparator().get_layout())
@@ -107,6 +107,14 @@ class MainWindow(QMainWindow):
 
         layout.addWidget(splitter)
         central_widget.setLayout(layout)
+
+    def export_image(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+
+        file_path, _ = QFileDialog.getSaveFileName(self, "Export image", "", "All Files (*)", options=options)
+
+        self.fractal_gen.write_to_file(file_path)
 
     def update_generator_values(self):
         self.fractal_gen.height = self.height_box.get_value()
