@@ -1,7 +1,10 @@
 # FractalTreeGenerator
 Python program built using PyQt and NumPy that allows you to create and visualize fractal trees through a graphical user interface (GUI). The program empowers users to experiment with various fractal tree parameters, observe real-time visualizations of their changes, and export the generated fractal trees as images. This interactive GUI provides a comprehensive platform to explore the beauty and complexity of fractal geometry.
 
-<img width="602" alt="generator" src="https://github.com/milckywayy/FractalTreeGenerator/assets/120181288/afd59dba-f54a-47a2-bfd7-ca1b8adf1a08">
+<img src="https://github.com/milckywayy/FractalTreeGenerator/assets/120181288/164673af-317a-45b4-9dda-981120424fad" alt="Recording" height="240">
+<img src="https://github.com/milckywayy/FractalTreeGenerator/assets/120181288/0ab22166-0f62-4bba-ae50-eef5179c2884" alt="Image 1" height="240">
+<img src="https://github.com/milckywayy/FractalTreeGenerator/assets/120181288/ca1a41ae-1a58-4214-a3ae-c7747a853f86" alt="Image 2" height="240">
+
 
 ## Features:
 - Interactive GUI: The program offers an intuitive graphical interface that enables users to adjust parameters and visualize the changes in real-time. PyQt is utilized to create a user-friendly experience.
